@@ -122,7 +122,7 @@ public class GameRenderer {
             shapeRenderer.rect(0, midPointY + 76, 136, 60);
         } else if(world.getGameState() == GameWorld.GameState.READY) {
             shapeRenderer.setColor(55 / 255.0f, 180 / 255.0f, 255 / 255.0f, 1);
-            shapeRenderer.rect(0, 0, 136, 234);
+            shapeRenderer.rect(0, 0, 136, 300);
         }
 
         shapeRenderer.end();
