@@ -25,7 +25,7 @@ public class AssetLoader {
 
     public static TextureRegion peh;
 
-    public static TextureRegion playButtonUp, playButtonDown, tutButtonUp, tutButtonDown;
+    public static TextureRegion playButtonUp, playButtonDown, tutButtonUp, tutButtonDown, pauseButtonUp, pauseButtonDown, playButton2Up, playButton2Down;
 
 
     public static Music bg, ded;
@@ -82,11 +82,23 @@ public class AssetLoader {
         playButtonDown = new TextureRegion(texture, 192, 0, 27, 21);
         playButtonDown.flip(false, true);
 
-        tutButtonUp = new TextureRegion(texture, 165, 21, 24, 18);
+        tutButtonUp = new TextureRegion(texture, 165, 21, 34, 9);
         tutButtonUp.flip(false, true);
 
-        tutButtonDown = new TextureRegion(texture, 189, 21, 24, 18);
+        tutButtonDown = new TextureRegion(texture, 165, 30, 34, 9);
         tutButtonDown.flip(false, true);
+
+        playButton2Up = new TextureRegion(texture, 20, 53, 15, 17);
+        playButton2Up.flip(false, true);
+
+        playButton2Down = new TextureRegion(texture, 35, 53, 15, 17);
+        playButton2Down.flip(false, true);
+
+        pauseButtonUp = new TextureRegion(texture, 50, 53, 15, 17);
+        pauseButtonUp.flip(false, true);
+
+        pauseButtonDown = new TextureRegion(texture, 65, 53, 15, 17);
+        pauseButtonDown.flip(false, true);
 
         TextureRegion[] legendsRight = { legend, legendRight, legendDown, legendLeft };
         legendAnimationRight = new Animation<TextureRegion>(0.09f, legendsRight);
@@ -101,6 +113,8 @@ public class AssetLoader {
 
     public static void dispose() {
         // We must dispose of the texture when we are finished.
+        bg.dispose();
+        ded.dispose();
         texture.dispose();
     }
 

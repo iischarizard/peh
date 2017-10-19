@@ -8,7 +8,9 @@ import com.charizard832.game.ActionResolver;
 import com.charizard832.game.LegendGame;
 import com.charizard832.gameworld.GameRenderer;
 import com.charizard832.gameworld.GameWorld;
+import com.charizard832.helpers.AssetLoader;
 import com.charizard832.helpers.InputHandler;
+import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
 
 /**
  * Created by chari on 6/17/2016.
@@ -44,15 +46,23 @@ public class GameScreen implements Screen {
 
     }
 
-    public TutorialScreen setTutorialScreen(){TutorialScreen ts; ts = new TutorialScreen(world, renderer);lg.setScreen(ts); return ts;}
-    public void setGameScreen(){lg.setScreen(this);}
+    public TutorialScreen setTutorialScreen(){
+        AssetLoader.ded.stop();
+        TutorialScreen ts;
+        ts = new TutorialScreen(world, renderer);
+        lg.setScreen(ts);
+        return ts;
+    }
+    public void setGameScreen(){renderer.getFont().getData().setScale(0.9f, 0.9f);lg.setScreen(this);}
     public InputHandler getInputHandler(){ return ih;}
 
     @Override
     public void render(float delta) {
-        runTime += delta;
+        if(!GameWorld.paused)
+            runTime += delta;
         world.update(delta);
         renderer.render(delta, runTime);
+
     }
 
     @Override

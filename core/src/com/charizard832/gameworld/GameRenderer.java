@@ -139,7 +139,6 @@ public class GameRenderer {
             }
 
             batcher.draw(AssetLoader.legendFade, lf.getX(), lf.getY(), lf.getWidth(), lf.getHeight());
-
             switch (legend.getRotation()) {
                 case 0:
                     batcher.draw(AssetLoader.legend, legend.getX(), legend.getY(), legend.getWidth(), legend.getHeight());

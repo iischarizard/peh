@@ -36,6 +36,7 @@ public class GameWorld {
 
     private ActionResolver ar;
 
+    public static boolean paused = false;
 
     public enum GameState{
         READY, RUNNING, GAMEOVER
@@ -73,22 +74,24 @@ public class GameWorld {
 
 
     public void update(float delta){
-        switch (gameState) {
-            case READY:
-                updateReady(delta);
-                break;
+        if(!paused) {
+            switch (gameState) {
+                case READY:
+                    updateReady(delta);
+                    break;
 
-            case RUNNING:
-                updateRunning(delta);
-                break;
-            case GAMEOVER:
-                updateGameOver(delta);
-                break;
+                case RUNNING:
+                    updateRunning(delta);
+                    break;
+                case GAMEOVER:
+                    updateGameOver(delta);
+                    break;
+            }
         }
 
     }
 
-    public void updateRunning(float delta){
+    private void updateRunning(float delta){
         legend.update(delta);
         allyHandler.update(delta);
         enemyHandler.update(delta);
@@ -119,10 +122,10 @@ public class GameWorld {
         }
     }
 
-    public void updateReady(float delta) {
+    private void updateReady(float delta) {
 
     }
-    public void updateGameOver(float delta){
+    private void updateGameOver(float delta){
 
     }
 

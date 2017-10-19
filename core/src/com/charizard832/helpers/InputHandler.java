@@ -28,7 +28,7 @@ public class InputHandler implements InputProcessor {
     private int midPointY;
 
     private List<SimpleButton> menuButtons, gameButtons;
-    private SimpleButton playButton, fade, fadeSnap, tutButton;
+    private SimpleButton playButton, fade, fadeSnap, tutButton, pauseButton;
 
     private LegendFade lf;
     public boolean dir, beginDir;
@@ -57,11 +57,14 @@ public class InputHandler implements InputProcessor {
         playButton = new SimpleButton(136/2 - (AssetLoader.playButtonDown.getRegionWidth()), midPointY, 27*2, 21*2, AssetLoader.playButtonUp, AssetLoader.playButtonDown);
         fade = new SimpleButton(136/2 - (AssetLoader.legend.getRegionWidth())+60, midPointY+10, 20, 20, AssetLoader.legendFade, AssetLoader.legendFade);
         fadeSnap = new SimpleButton(136/2 - (AssetLoader.legend.getRegionWidth())+60, midPointY+30, 20, 20, AssetLoader.legend, AssetLoader.legend);
-        tutButton = new SimpleButton(136/2 - (AssetLoader.tutButtonDown.getRegionWidth()), midPointY+1+AssetLoader.playButtonDown.getRegionHeight()*2, 24*2, 18*2, AssetLoader.tutButtonUp, AssetLoader.tutButtonDown);
+        tutButton = new SimpleButton(136/2 - (AssetLoader.tutButtonDown.getRegionWidth()/2), midPointY+30+AssetLoader.playButtonDown.getRegionHeight(), 34, 9, AssetLoader.tutButtonUp, AssetLoader.tutButtonDown);
+        pauseButton = new SimpleButton(136/2 - (AssetLoader.pauseButtonDown.getRegionWidth())/2+55, 5, 15, 17, AssetLoader.pauseButtonUp, AssetLoader.pauseButtonDown);
+
         menuButtons.add(playButton);
         menuButtons.add(tutButton);
         gameButtons.add(fade);
         gameButtons.add(fadeSnap);
+        gameButtons.add(pauseButton);
 
         this.scaleFactorX = scaleFactorX;
         this.scaleFactorY = scaleFactorY;
@@ -96,30 +99,9 @@ public class InputHandler implements InputProcessor {
                         legend.setX((int) lf.getX());
                         return true;
                     }
-                    if (beginDir) {
-                        beginDir = false;
-                        if (screenX > legend.getX()) {
-                            dir = false;
-                            legend.setVelocity(legend.getSpeedX(), 0);
-                            legend.setRotation(1);
-                        } else {
-                            dir = true;
-                            legend.setVelocity(-legend.getSpeedX(), 0);
-                            legend.setRotation(2);
-                        }
-                    } else {
-                        if(!legend.isStopped()) {
-                            if (dir) {
-                                dir = false;
-                                legend.setVelocity(legend.getSpeedX(), 0);
-                                legend.setRotation(1);
-                            } else {
-                                dir = true;
-                                legend.setVelocity(-legend.getSpeedX(), 0);
-                                legend.setRotation(2);
-                            }
-                        }else{
-                            legend.setStopped(false);
+                    if(!pauseButton.isTouchDown(screenX, screenY)) {
+                        if (beginDir) {
+                            beginDir = false;
                             if (screenX > legend.getX()) {
                                 dir = false;
                                 legend.setVelocity(legend.getSpeedX(), 0);
@@ -129,9 +111,31 @@ public class InputHandler implements InputProcessor {
                                 legend.setVelocity(-legend.getSpeedX(), 0);
                                 legend.setRotation(2);
                             }
+                        } else {
+                            if (!legend.isStopped()) {
+                                if (dir) {
+                                    dir = false;
+                                    legend.setVelocity(legend.getSpeedX(), 0);
+                                    legend.setRotation(1);
+                                } else {
+                                    dir = true;
+                                    legend.setVelocity(-legend.getSpeedX(), 0);
+                                    legend.setRotation(2);
+                                }
+                            } else {
+                                legend.setStopped(false);
+                                if (screenX > legend.getX()) {
+                                    dir = false;
+                                    legend.setVelocity(legend.getSpeedX(), 0);
+                                    legend.setRotation(1);
+                                } else {
+                                    dir = true;
+                                    legend.setVelocity(-legend.getSpeedX(), 0);
+                                    legend.setRotation(2);
+                                }
+                            }
                         }
                     }
-
                     break;
                 case GAMEOVER:
                     playButton.isTouchDown(screenX, screenY);
@@ -217,6 +221,14 @@ public class InputHandler implements InputProcessor {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         screenX = scaleX(screenX);
         screenY = scaleY(screenY);
+
+        if(tutorial) {
+            if (playButton.isTouchUp(screenX, screenY)) {
+                tutorial = false;
+                world.reset();
+                gs.setGameScreen();
+            }
+        }
         switch(world.getGameState()){
             case READY:
 
@@ -227,6 +239,13 @@ public class InputHandler implements InputProcessor {
                 }
                 break;
             case RUNNING:
+                if(pauseButton.isTouchUp(screenX, screenY)){
+                    if(!GameWorld.paused)
+                        pauseButton.setTextures(AssetLoader.playButton2Up, AssetLoader.playButton2Down);
+                    else
+                        pauseButton.setTextures(AssetLoader.pauseButtonUp, AssetLoader.pauseButtonDown);
+                    GameWorld.paused = !GameWorld.paused;
+                }
                 break;
             case GAMEOVER:
                 if(playButton.isTouchUp(screenX, screenY)){world.reset();lf.setX((int)legend.getX());beginDir = true;}
@@ -236,8 +255,6 @@ public class InputHandler implements InputProcessor {
                 }
                 break;
         }
-        if(tutorial)
-            if(playButton.isTouchUp(screenX, screenY)){gs.setGameScreen();tutorial=false;world.reset();}
         return true;
     }
     private int scaleX(int screenX) {

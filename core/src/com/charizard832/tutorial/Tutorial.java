@@ -58,12 +58,13 @@ public class Tutorial {
         this.shapeRenderer = gameRenderer.getShapeRenderer();
         this.batcher = gameRenderer.getBatcher();
         this.font = gameRenderer.getFont();
+        font.getData().setScale(0.7f, 0.7f);
 
         InputHandler ih = (InputHandler) Gdx.input.getInputProcessor();
         this.ih = ih;
 
 
-        textX = 5;
+        textX = 20;
         textY = midPointY - 30;
         text2X = 30;
         text2Y = midPointY-20;
@@ -112,13 +113,14 @@ public class Tutorial {
         font.draw(batcher, text3, text3X, text3Y);
         switch (flags){
             case 0:
+                textX = 20;
                 break;
             case 1:
                 textY = midPointY - 50;
-                textX = 25;
-                text2X = 28;
+                textX = 35;
+                text2X = 38;
                 text2Y = midPointY - 20;
-                text3X = 7;
+                text3X = 20;
                 text3Y = midPointY - 5;
                 text = "This is Peh!";
                 text2 = "You will be";
@@ -127,8 +129,8 @@ public class Tutorial {
                 batcher.draw(AssetLoader.legend, legend.getX(), legend.getY(), legend.getWidth(), legend.getHeight());
                 break;
             case 2:
-                textX = 15;
-                text2X = 40;
+                textX = 28;
+                text2X = 45;
                 text2Y = midPointY - 35;
                 text = "Tap to start";
                 text2 = "rolling!";
@@ -136,7 +138,7 @@ public class Tutorial {
                 batcher.draw(AssetLoader.legend, legend.getX(), legend.getY(), legend.getWidth(), legend.getHeight());
                 break;
             case 3:
-                textX = 25;
+                textX = 37;
                 text = "Great Job!";
                 text2 = "";
                 text3 = "";
@@ -153,10 +155,10 @@ public class Tutorial {
                 }
                 break;
             case 4:
-                textX = 45;
+                textX = 50;
                 text2Y = midPointY - 20;
-                text2X = 20;
-                text3X = 10;
+                text2X = 35;
+                text3X = 25;
                 text = "Oh no!";
                 text2 = "A Pehnemmy";
                 text3 = "has appeared!";
@@ -164,11 +166,10 @@ public class Tutorial {
                 batcher.draw(AssetLoader.enemy1, legend.getX(), 0, 15, 35);
                 break;
             case 5:
-                text2X = 25;
-                text3X = 45;
+                text2X = 15;
                 text = "Quick!";
-                text2 = "Tap to roll";
-                text3 = "away!!";
+                text2 = "Tap to roll away!!";
+                text3 = "";
                 enemyX = legend.getX();
                 batcher.draw(AssetLoader.legend, legend.getX(), legend.getY(), legend.getWidth(), legend.getHeight());
                 batcher.draw(AssetLoader.enemy1, enemyX, 0, 15, 35);
@@ -188,19 +189,19 @@ public class Tutorial {
                 batcher.draw(AssetLoader.enemy1, enemyX, enemyY, 15, 35);
                 break;
             case 7:
-                textX = 30;
+                textX = 40;
                 text2Y = midPointY - 20;
                 text3Y = midPointY - 5;
-                text2X = 10;
-                text3X = 11;
+                text2X = 25;
+                text3X = 26;
                 text = "Great job!";
                 text2 = "Dodge enemies";
                 text3 = "to get points!";
                 batcher.draw(AssetLoader.legend, legend.getX(), legend.getY(), legend.getWidth(), legend.getHeight());
                 break;
             case 8:
-                textX=8;
-                text2X= 2;
+                textX=23;
+                text2X= 19;
                 text2Y = midPointY-35;
                 text="Catch Sunpehs";
                 text2="for extra lives!";
@@ -208,36 +209,39 @@ public class Tutorial {
                 batcher.draw(AssetLoader.sun, midPointX-AssetLoader.sun.getRegionWidth()/2, midPointY+10, AssetLoader.sun.getRegionWidth(), AssetLoader.sun.getRegionHeight());
                 break;
             case 9:
-                textX=7;
-                text2X= 8;
+                textX=20;
+                text2X= 21;
                 text3Y = midPointY-20;
-                text3X = 35;
+                text3X = 38;
                 text="Catch Pehbbles";
                 text2="to buy stuff in";
                 text3="the shop!";
                 batcher.draw(AssetLoader.pehbble, midPointX-AssetLoader.pehbble.getRegionWidth()/2, midPointY+10, AssetLoader.pehbble.getRegionWidth(), AssetLoader.pehbble.getRegionHeight());
                 break;
             case 10:
-                textX=1;
-                text2X= 15;
-                text3X = 20;
+                textX=16;
+                text2X= 25;
+                text3X = 35;
                 text="Tap the Fadepeh";
                 text2="button to set";
                 text3="a teleport!";
-                batcher.draw(AssetLoader.legendFade, midPointX-AssetLoader.legendFade.getRegionWidth()/2, midPointY+10, AssetLoader.legendFade.getRegionWidth(), AssetLoader.legendFade.getRegionHeight());
+                batcher.draw(AssetLoader.legendFade, 136/2 - (AssetLoader.legend.getRegionWidth())+60, midPointY+10, 20, 20);
+                batcher.draw(AssetLoader.legendFade, midPointX-9, legend.getY(), legend.getWidth(), legend.getHeight());
                 break;
             case 11:
-                textX=20;
-                text2X= 17;
-                text3X = 50;
+                textX=33;
+                text2X= 30;
+                text3X = 55;
                 text="Tap the peh";
                 text2="button to go";
                 text3="to it!";
-                batcher.draw(AssetLoader.legend, midPointX-AssetLoader.legend.getRegionWidth()/2, midPointY+10, AssetLoader.legend.getRegionWidth(), AssetLoader.legend.getRegionHeight());
+                batcher.draw(AssetLoader.legendFade, 136/2 - (AssetLoader.legend.getRegionWidth())+60, midPointY+10, 20, 20);
+                batcher.draw(AssetLoader.legend, 136/2 - (AssetLoader.legend.getRegionWidth())+60, midPointY+30, 20, 20);
+                batcher.draw(AssetLoader.legend, midPointX-9, legend.getY(), legend.getWidth(), legend.getHeight());
                 break;
             case 12:
-                textX= 30;
-                text2X = 15;
+                textX= 40;
+                text2X = 25;
                 text = "Good luck!";
                 text2 = "Tap to start!";
                 text3 = "";

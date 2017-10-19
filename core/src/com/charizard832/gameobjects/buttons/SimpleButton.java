@@ -32,6 +32,11 @@ public class SimpleButton {
 
     }
 
+    public void setTextures(TextureRegion buttonUp, TextureRegion buttonDown){
+        this.buttonUp = buttonUp;
+        this.buttonDown = buttonDown;
+    }
+
     public Rectangle getBounds(){return bounds;}
 
     public boolean isClicked(int screenX, int screenY) {

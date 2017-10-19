@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.charizard832.gameobjects.Legend;
 import com.charizard832.helpers.AssetLoader;
 import com.charizard832.screens.GameScreen;
+import com.charizard832.screens.TutorialScreen;
 
 public class LegendGame extends Game {
 
